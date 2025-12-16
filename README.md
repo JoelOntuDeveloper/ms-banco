@@ -36,6 +36,18 @@ java -jar build\libs\ms-banco-1.0.0-SNAPSHOT.jar
 - Puerto por defecto: `8081` (ver `src/main/resources/application.properties`).
 - Datos de conexión a la base de datos en [application.properties](/src/main/resources/application.properties).
 
+**Despliegue en Docker**
+
+El proyecto incluye `Dockerfile` y `docker-compose.yml` para desplegar en contenedores.
+
+Con Docker Compose:
+
+```bash
+docker-compose up --build
+```
+
+Acceder a la aplicación en http://localhost:8081/
+
 **Endpoints relevantes**
 - `GET /api/reportes/{clienteId}?fechaInicio=YYYY-MM-DD&fechaFin=YYYY-MM-DD`
 	- Retorna el reporte (`EstadoCuentaReporteDTO`) en JSON con cuentas y movimientos.

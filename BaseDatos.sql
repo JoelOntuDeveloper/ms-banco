@@ -1,45 +1,48 @@
-CREATE DATABASE db_banco;
+CREATE DATABASE IF NOT EXISTS db_banco;
 use db_banco;
 
--- /* CREACION DE TABLAS*/
--- TABLA PERSONA
-CREATE TABLE IF NOT EXISTS PERSONA  (
-    PersonaId BIGINT AUTO_INCREMENT PRIMARY KEY,
-    Identificacion VARCHAR(50) NOT NULL UNIQUE,
-    Nombre VARCHAR(100),
-    Genero VARCHAR(20),
-    Edad INT,
-    Direccion VARCHAR(200),
-    Telefono VARCHAR(20)
+-- CREACION DE TABLAS
+
+-- tabla persona
+CREATE TABLE IF NOT EXISTS persona (
+    persona_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    identificacion VARCHAR(255) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    genero VARCHAR(255),
+    edad INT,
+    direccion VARCHAR(200),
+    telefono VARCHAR(255)
 );
 
--- TABLA CLIENTE
-CREATE TABLE IF NOT EXISTS CLIENTE (
-    ClienteId BIGINT AUTO_INCREMENT PRIMARY KEY,
-    Contrasena VARCHAR(100) NOT NULL,
-    Estado VARCHAR(20),
-    PersonaId BIGINT NOT NULL,
-    FOREIGN KEY (personaId) REFERENCES Persona(personaId)
+-- tabla cliente
+CREATE TABLE IF NOT EXISTS cliente (
+    cliente_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    contrasena VARCHAR(255) NOT NULL,
+    estado VARCHAR(255),
+    persona_id BIGINT NOT NULL,
+    UNIQUE KEY uk_cliente_persona_id (persona_id),
+    FOREIGN KEY (persona_id) REFERENCES persona(persona_id)
 );
 
--- TABLA CUENTA
-CREATE TABLE IF NOT EXISTS Cuenta (
-    CuentaId BIGINT AUTO_INCREMENT PRIMARY KEY,
-    NumeroCuenta VARCHAR(30) NOT NULL UNIQUE,
-    TipoCuenta VARCHAR(30) NOT NULL,
-    SaldoInicial DECIMAL(15,2) NOT NULL DEFAULT 0.00,
-    Estado VARCHAR(20),
-    ClienteId BIGINT NOT NULL,
-    FOREIGN KEY (ClienteId) REFERENCES Cliente(clienteId)
+-- tabla cuenta
+CREATE TABLE IF NOT EXISTS cuenta (
+    cuenta_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    numero_cuenta VARCHAR(30) NOT NULL,
+    tipo_cuenta VARCHAR(30) NOT NULL,
+    saldo_inicial DECIMAL(15,2) NOT NULL DEFAULT 0.00,
+    estado VARCHAR(20),
+    cliente_id BIGINT NOT NULL,
+    UNIQUE KEY uk_cuenta_numero (numero_cuenta),
+    FOREIGN KEY (cliente_id) REFERENCES cliente(cliente_id)
 );
 
--- TABLA MOVIMIENTO
-CREATE TABLE IF NOT EXISTS Movimiento (
-    MovimientoId BIGINT AUTO_INCREMENT PRIMARY KEY,
-    Fecha DATETIME NOT NULL,
-    TipoMovimiento VARCHAR(30) NOT NULL,
-    Valor DECIMAL(15,2) NOT NULL,
-    Saldo DECIMAL(15,2) NOT NULL,
-    CuentaId BIGINT NOT NULL,
-    FOREIGN KEY (cuentaId) REFERENCES Cuenta(CuentaId)
+-- tabla movimiento
+CREATE TABLE IF NOT EXISTS movimiento (
+    movimiento_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    fecha DATETIME NOT NULL,
+    tipo_movimiento VARCHAR(30) NOT NULL,
+    valor DECIMAL(15,2) NOT NULL,
+    saldo DECIMAL(15,2) NOT NULL,
+    cuenta_id BIGINT NOT NULL,
+    FOREIGN KEY (cuenta_id) REFERENCES cuenta(cuenta_id)
 );

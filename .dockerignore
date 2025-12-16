@@ -1,0 +1,27 @@
+# Gradle
+.gradle/
+build/
+# keep gradle wrapper (gradlew) so Docker build can use it
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+*.iml
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Other
+*.log
+.env
+target/
